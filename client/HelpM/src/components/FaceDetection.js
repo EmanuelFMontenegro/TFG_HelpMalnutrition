@@ -1,31 +1,65 @@
 import React, {useState, useRef} from 'react';
-import {StyleSheet, View, Dimensions} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Text, Platform} from 'react-native';
 import {RNCamera} from 'react-native-camera';
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+import {MaskedView} from '@react-native-community/masked-view';
+import Svg, {Polygon} from 'react-native-svg';
 
 const FaceDetection = () => {
-  const [type, setType] = useState(RNCamera.Constants.Type.front);
-  const [faceMeasurements, setFaceMeasurements] = useState(null);
+  const [detectedFaces, setDetectedFaces] = useState([]);
+  const [cameraType, setCameraType] = useState('front');
   const cameraRef = useRef(null);
 
-  const handleFaceDetected = ({faces}) => {
-    if (faces.length > 0) {
-      const face = faces[0];
-      const {bounds} = face;
+  const handleFacesDetected = ({faces}) => {
+    console.log('Detected faces:', faces);
+    setDetectedFaces(faces);
+  };
 
-      const measurements = {
-        width: bounds.size.width,
-        height: bounds.size.height,
-        x: bounds.origin.x,
-        y: bounds.origin.y,
-      };
+  const toggleCameraType = () => {
+    setCameraType(prevCameraType =>
+      prevCameraType === 'front' ? 'back' : 'front',
+    );
+  };
 
-      setFaceMeasurements(measurements);
-    } else {
-      setFaceMeasurements(null);
-    }
+  const renderFaces = () => {
+    if (detectedFaces.length === 0) return null;
+    return detectedFaces.map((face, index) => (
+      <View
+        key={index}
+        style={[
+          styles.faceRectangle,
+          {
+            top: face.bounds.origin.y,
+            left: face.bounds.origin.x,
+            width: face.bounds.size.width,
+            height: face.bounds.size.height,
+          },
+        ]}
+      />
+    ));
+  };
+
+  const renderMask = face => {
+    if (!face || !face.landmarks) return null;
+
+    const points = face.landmarks
+      .map(landmark => `${landmark.x},${landmark.y},${landmark.z}`)
+      .join(' ');
+
+    return (
+      <MaskedView
+        style={styles.mask}
+        maskElement={
+          <Svg
+            height="100%"
+            width="100%"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none">
+            <Polygon points={points} fill="white" />
+          </Svg>
+        }>
+        <View style={styles.maskedContainer} />
+      </MaskedView>
+    );
   };
 
   return (
@@ -33,31 +67,22 @@ const FaceDetection = () => {
       <RNCamera
         ref={cameraRef}
         style={styles.camera}
-        type={type}
-        captureAudio={false}
-        onFacesDetected={handleFaceDetected}
+        type={cameraType}
+        onFacesDetected={handleFacesDetected}
         faceDetectionLandmarks={RNCamera.Constants.FaceDetection.Landmarks.all}
+        faceDetectionMode={RNCamera.Constants.FaceDetection.Mode.accurate}
         faceDetectionClassifications={
-          RNCamera.Constants.FaceDetection.Classifications.all
+          Platform.OS === 'ios'
+            ? RNCamera.Constants.FaceDetection.Classifications.all
+            : RNCamera.Constants.FaceDetection.Classifications.none
         }
       />
+      {renderFaces()}
+      {detectedFaces.length > 0 && renderMask(detectedFaces[0])}
 
-      {faceMeasurements && (
-        <View
-          style={[
-            styles.bound,
-            {
-              width: faceMeasurements.width,
-
-              height: faceMeasurements.height,
-
-              left: faceMeasurements.x,
-
-              top: faceMeasurements.y,
-            },
-          ]}
-        />
-      )}
+      <TouchableOpacity style={styles.toggleButton} onPress={toggleCameraType}>
+        <Text style={styles.toggleButtonText}>Cambiar cámara</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -65,16 +90,39 @@ const FaceDetection = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gray',
+    backgroundColor: 'transparent',
   },
   camera: {
     flex: 1,
   },
-  bound: {
+  faceRectangle: {
     position: 'absolute',
-    borderWidth: 5,
-    borderColor: '#00CFEB',
-    zIndex: 3000,
+    borderColor: 'red',
+    borderWidth: 2,
+    borderRadius: 5,
+  },
+  mask: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+  },
+  maskedContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+  },
+  toggleButton: {
+    position: 'absolute',
+    bottom: 16,
+    left: 16,
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 8,
+  },
+  toggleButtonText: {
+    color: 'black',
+    fontWeight: 'bold',
   },
 });
 

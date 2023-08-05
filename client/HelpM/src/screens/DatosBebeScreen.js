@@ -42,6 +42,7 @@ function DatosBebeScreen() {
     setSexo(nuevoSexo);
     console.log('Nuevo sexo seleccionado:', nuevoSexo);
   };
+  const [mostrarTratamiento, setMostrarTratamiento] = useState(false);
   const handleGuardar = async () => {
     setCambiarColor('#4169e1');
     const fechaNacimientoFormatted = fechaNacimiento
@@ -78,7 +79,7 @@ function DatosBebeScreen() {
       });
       if (response.ok) {
         console.log('Datos insertados correctamente');
-        Alert.alert('Guardar', 'Datos guardados correctamente', [
+        Alert.alert('Exito', 'Datos guardados correctamente', [
           {text: 'OK', onPress: () => resetForm()},
         ]);
       } else {
@@ -93,7 +94,23 @@ function DatosBebeScreen() {
       setCambiarColor('#00CFEB');
     }, 400);
   };
+
   const [mostrarResultado, setMostrarResultado] = useState(false);
+  const handleMostrarTratamiento = nivelDesnutricion => {
+    setMostrarTratamiento(true);
+  };
+  const tratamientoMensajes = {
+    normal:
+      'El bebé no necesita tratamiento especial. Sus valores son normales.',
+    'grado I':
+      'Nivel I : El niño puede ser tratado en casa con una dieta alta en calorías y nutrientes. La dieta debe incluir una variedad de alimentos, como frutas, verduras, cereales integrales, carnes magras, pescado, huevos, leche y productos lácteos, aceites vegetales, nueces y semillas. También se puede recomendar la suplementación con leche en polvo o alimentos terapéuticos listos para usar (RUTF). La RUTF es un alimento alto en calorías y nutrientes que se puede utilizar para tratar la desnutrición.',
+    'grado II':
+      'Nivel II : El niño debe ser hospitalizado para recibir tratamiento nutricional intravenoso. También se puede recomendar la suplementación con RUTF. El tratamiento intravenoso se utiliza para proporcionar al niño nutrientes que no puede obtener de la comida. La RUTF se puede utilizar para complementar la dieta del niño y ayudarle a recuperar peso.',
+
+    'grado III':
+      'Nivel III : El niño debe ser hospitalizado para recibir tratamiento nutricional intravenoso y RUTF. También puede necesitar tratamiento para otras complicaciones, como infecciones. El tratamiento intravenoso y la RUTF se utilizan para proporcionar al niño los nutrientes que necesita para recuperarse y prevenir complicaciones.',
+  };
+
   const handleResultado = () => {
     setButtonColor('#4169e1');
     setTimeout(() => {
@@ -101,34 +118,44 @@ function DatosBebeScreen() {
     }, 400);
     const edadMeses = parseInt(edad, 10);
     if (isNaN(edadMeses)) {
-      Alert.alert('Error', 'Por favor, complete todo el formulario.');
+      Alert.alert('Atencion', 'Por favor, complete todo el formulario.');
       return;
     }
     if (sexo === '') {
-      Alert.alert('Error', 'Por favor, seleccione el sexo del bebe.');
+      Alert.alert('Atencion', 'Por favor, seleccione el sexo del bebe.');
       return;
     }
     if (peso === '') {
-      Alert.alert('Error', 'Por favor, agregue el peso del bebe.');
+      Alert.alert('Atencion', 'Por favor, agregue el peso del bebe.');
       return;
     }
     const sexoLower = sexo.toLowerCase();
     console.log('Sexo seleccionado:', sexoLower);
     try {
-      const {bebeDesnutrido, nivelDesnutricion} = CotejarMedidas(
-        sexoLower,
-        edadMeses,
-        parseFloat(perimetroCefalico),
-        parseFloat(peso),
-        parseFloat(altura),
-      );
+      const {bebeDesnutrido, nivelDesnutricion, mensajeDesnutricion} =
+        CotejarMedidas(
+          sexoLower,
+          edadMeses,
+          parseFloat(perimetroCefalico),
+          parseFloat(peso),
+          parseFloat(altura),
+        );
+
       console.log(
         'Resultados de CotejarMedidas:',
         bebeDesnutrido,
         nivelDesnutricion,
       );
       let message = '';
+
       if (bebeDesnutrido) {
+        const tratamientoMensaje =
+          tratamientoMensajes[nivelDesnutricion] ||
+          'No se encontró información de tratamiento para el grado de desnutrición.';
+
+        setTimeout(() => {
+          Alert.alert('Tratamiento:', tratamientoMensaje);
+        }, 2500);
         if (nivelDesnutricion === 'grado III') {
           message =
             'El bebé se encuentra desnutrido y su nivel es de grado III.';
@@ -142,8 +169,9 @@ function DatosBebeScreen() {
             'El bebé se encuentra desnutrido y su nivel es desconocido.';
         }
         Alert.alert(
-          'Resultado',
-          message,
+          'Atencion',
+          mensajeDesnutricion,
+
           [
             {
               text: 'Aceptar',
@@ -155,29 +183,31 @@ function DatosBebeScreen() {
           {cancelable: false},
         );
       } else {
-        message =
-          'El bebé no se encuentra desnutrido y su nivel de nutrición es normal.';
+        message = 'El bebé se encuentra en un estado de nutrición óptimo.';
         Alert.alert(
-          'Resultado',
+          'Atencion',
           message,
           [
             {
               text: 'Aceptar',
               onPress: () => {
                 setMostrarResultado(false);
+                handleMostrarTratamiento(nivelDesnutricion);
               },
             },
           ],
 
-          {cancelable: false},
+          {
+            cancelable: false,
+          },
         );
       }
     } catch (error) {
       console.log('Error en el cotejo:', error.message);
-
       Alert.alert('Error', error.message);
     }
   };
+
   const showDatePickerModal = type => {
     setShowDatePicker(true);
     setSelectedFecha(type);
@@ -333,6 +363,7 @@ function DatosBebeScreen() {
     </KeyboardAwareScrollView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

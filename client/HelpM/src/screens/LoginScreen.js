@@ -63,6 +63,8 @@ const LoginScreen = ({onLogin}) => {
   };
 
   const handleSignIn = () => {
+    const email = 'emamonte777@gmail.com';
+    const password = 'Agustin12345678';
     if (!email || !password) {
       setEmailError(!email);
       setPasswordError(!password);
@@ -76,8 +78,7 @@ const LoginScreen = ({onLogin}) => {
       .then(userCredential => {
         const user = userCredential.user;
         console.log(user);
-       navigation.navigate('BottomTab');
-  
+        navigation.navigate('BottomTab');
       })
       .catch(error => {
         Alert.alert('Error', 'Email/Contraseña incorrectos');

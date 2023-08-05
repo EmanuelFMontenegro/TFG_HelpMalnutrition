@@ -14,7 +14,7 @@ const FaceMeshDetection = () => {
       <FaceMesh style={styles.camera} onMesh={handleMesh} />
       {mesh && (
         <>
-          @ts-ignore @ts-ignore
+          
           {mesh.points.map((point, index) => (
             <View
               key={index}
