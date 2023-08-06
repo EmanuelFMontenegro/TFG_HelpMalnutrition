@@ -52,10 +52,7 @@ function DatosBebeScreen() {
       ? fechaVisita.toISOString().slice(0, 10)
       : null;
     if (!perimetroCefalico) {
-      Alert.alert(
-        'Error',
-        'Por favor, agregue la circunferencia de la cabeza.',
-      );
+      Alert.alert('Atencion', 'Por favor, complete todo el formulario.');
       return;
     }
     const datos = {
@@ -70,7 +67,7 @@ function DatosBebeScreen() {
       fechaVisita: fechaVisitaFormatted,
     };
     try {
-      const response = await fetch('http://192.168.0.6:8080/datosBebe', {
+      const response = await fetch('http://192.168.0.7:8080/datosBebe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -79,7 +76,7 @@ function DatosBebeScreen() {
       });
       if (response.ok) {
         console.log('Datos insertados correctamente');
-        Alert.alert('Exito', 'Datos guardados correctamente', [
+        Alert.alert('Mensaje Exitoso', 'Datos guardados correctamente', [
           {text: 'OK', onPress: () => resetForm()},
         ]);
       } else {

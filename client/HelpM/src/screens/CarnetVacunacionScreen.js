@@ -10,7 +10,7 @@ import {
   Keyboard,
   ScrollView,
   KeyboardAvoidingView,
-  Alert
+  Alert,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -27,7 +27,7 @@ const CarnetVacunacionScreen = () => {
   const [keyboardAvoidingEnabled, setKeyboardAvoidingEnabled] = useState(true);
 
   const showDatePickerModal = () => {
-    Keyboard.dismiss(); 
+    Keyboard.dismiss();
     setShowDatePicker(true);
     setKeyboardAvoidingEnabled(false);
   };
@@ -46,7 +46,6 @@ const CarnetVacunacionScreen = () => {
     {id: 8, nombre: 'Rotavirus', dosis: ['2 meses', '4 meses', '6 meses']},
     {id: 5, nombre: 'Sarampión y Rubeola', dosis: ['12-15 meses']},
     {id: 4, nombre: 'Varicela', dosis: ['12-15 meses']},
-    
   ];
   const resetForm = () => {
     setFechaNacimiento(null);
@@ -83,7 +82,6 @@ const CarnetVacunacionScreen = () => {
     );
     const selectedVacunaNombres = selectedVacunas.map(vacuna => vacuna.nombre);
 
-    
     const fechaNacimientoFormatted = fechaNacimiento
       ?.toISOString()
       .slice(0, 10);
@@ -95,7 +93,7 @@ const CarnetVacunacionScreen = () => {
     };
     console.log('Datos a enviar:', dataVacunas);
     try {
-      const response = await fetch('http://192.168.0.6:8080/cargarVacunas', {
+      const response = await fetch('http://192.168.0.7:8080/cargarVacunas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +102,6 @@ const CarnetVacunacionScreen = () => {
       });
 
       if (!response.ok) {
-        
         throw new Error(
           `Error al cargar vacunas: ${response.status} ${response.statusText}`,
         );

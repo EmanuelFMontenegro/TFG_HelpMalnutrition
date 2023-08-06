@@ -12,12 +12,15 @@ const pool = mysql
   })
   .promise();
 
-export async function getdatosBebeById(id) {
+export async function getdatosBebeByDNI(dni) {
   try {
-    const [row] = await pool.query(`SELECT * FROM datos_bebe WHERE id=?`, [id]);
-    return row;
+    const [rows] = await pool.query(
+      `SELECT fechaVisita,dni, peso, nombreApellido,edad,perimetroCefalico,altura,sexo,fechaNacimiento FROM datos_bebe WHERE dni=? ORDER BY fechaVisita`,
+      [dni]
+    );
+    return rows;
   } catch (error) {
-    console.error("Error al obtener datos del bebé por id:", error);
+    console.error("Error al obtener datos del bebé por DNI:", error);
     throw error;
   }
 }

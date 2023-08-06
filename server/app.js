@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  getdatosBebeById,
+  getdatosBebeByDNI,
   insertarDatosBebe,
   insertarVacunas,
 } from "./database.js";
@@ -16,9 +16,26 @@ const app = express();
 app.use(express.json());
 app.use(cors(corsOptions));
 
-app.get("/datosBebe/:id", async (req, res) => {
-  const datos_bebe = await getdatosBebeById(req.params.id);
-  res.status(200).send(datos_bebe);
+app.get("/datosBebe/:dni", async (req, res) => {
+  try {
+    const dni = req.params.dni;
+    console.log("Buscando datos del bebé con DNI:", dni);
+
+    const datos_bebe = await getdatosBebeByDNI(dni);
+
+    if (datos_bebe) {
+      console.log("Datos del bebé encontrados:", datos_bebe);
+      res.status(200).send(datos_bebe);
+    } else {
+      console.log("No se encontraron datos para el DNI:", dni);
+      res
+        .status(404)
+        .json({ error: "No se encontraron datos para el DNI proporcionado" });
+    }
+  } catch (error) {
+    console.error("Error al buscar datos del bebé:", error);
+    res.status(500).json({ error: "Error al buscar datos del bebé" });
+  }
 });
 
 app.post("/datosBebe/", async (req, res) => {

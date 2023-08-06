@@ -11,6 +11,7 @@ import CarnetVacunacionScreen from '../screens/CarnetVacunacionScreen';
 import FaceDetection from '../components/FaceDetection';
 import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import {useCerrarSesion} from '../controller/CerrarSesion';
+import ResultadoScreen from '../screens/ResultadoScreen';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -87,8 +88,8 @@ const BottomTab = ({navigation}) => {
           tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faBaby} color="#00CFEB" size={24} />
           ),
-          tabBarLabel: 'Cuestionario Paciente',
-          headerTitle: 'Cuestionario de Evaluacion y Visita',
+          tabBarLabel: 'Diagnóstico',
+          headerTitle: 'Formulario de diagnóstico',
         }}
       />
 
@@ -112,6 +113,18 @@ const BottomTab = ({navigation}) => {
           ),
           tabBarLabel: 'Detección Facial',
           headerTitle: 'Detección Facial',
+        })}
+      />
+
+      <Tab.Screen
+        name="ResultadoScreen"
+        component={ResultadoScreen}
+        options={({navigation}) => ({
+          tabBarIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faUser} size={24} color="#00CFEB" />
+          ),
+          tabBarLabel: 'Estadistica',
+          headerTitle: 'Informacion de crecimiento',
         })}
       />
     </Tab.Navigator>

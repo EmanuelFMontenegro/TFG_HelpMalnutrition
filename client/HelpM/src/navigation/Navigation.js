@@ -6,6 +6,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import StartScreen from '../screens/StartScreen';
 import LoginScreen from '../screens/LoginScreen';
 import DatosBebeScreen from '../screens/DatosBebeScreen';
+import ResultadoScreen from '../screens/ResultadoScreen'; // Nueva importación
 import BottomTab from './BottomTab';
 
 const Stack = createStackNavigator();
@@ -42,6 +43,19 @@ const Navigation = () => {
         <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="DatosBebeScreen"
+          component={DatosBebeScreen}
+          options={{headerShown: false}}
+        />
+
+        {/* Nueva pantalla de resultados */}
+        <Stack.Screen
+          name="ResultadoScreen"
+          component={ResultadoScreen}
           options={{headerShown: false}}
         />
 
