@@ -91,7 +91,6 @@ function ResultadosScreen() {
         {datosBebe.map((bebe, index) => (
           <View key={index}>
             <Text style={styles.label}>Nombre: {bebe.nombreApellido}</Text>
-            {/* <Text style={styles.label}>DNI: {bebe.dni}</Text> */}
             <Text style={styles.label}>
               Fecha de Nacimiento: {formatDate(bebe.fechaNacimiento)}
             </Text>
@@ -101,7 +100,6 @@ function ResultadosScreen() {
               Perímetro Cefálico: {bebe.perimetroCefalico}
             </Text>
             <Text style={styles.label}>Altura: {bebe.altura}</Text>
-            {/* <Text style={styles.label}>Sexo: {bebe.sexo}</Text> */}
             <Text style={styles.label}>
               Fecha de Visita: {formatDate(bebe.fechaVisita)}
             </Text>
