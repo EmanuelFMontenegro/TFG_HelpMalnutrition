@@ -20,7 +20,9 @@ function ResultadosScreen() {
   const handleBuscar = async () => {
     setMostrarGrafica(false);
     try {
-      const response = await fetch(`http://192.168.0.7:8080/datosBebe/${dni}`);
+      const response = await fetch(
+        `http:// 192.168.0.16:8080/datosBebe/${dni}`,
+      );
       if (response.ok) {
         const datosBebe = await response.json();
         if (Array.isArray(datosBebe) && datosBebe.length > 0) {
@@ -41,7 +43,7 @@ function ResultadosScreen() {
         );
       }
     } catch (error) {
-      console.error('Error al buscar el dni del bebé:', error);
+      // console.error('Error al buscar el dni del bebé:', error);
       setDatosBebe(null);
       Alert.alert(
         'Error',

@@ -25,6 +25,7 @@ const CarnetVacunacionScreen = () => {
   const fechaNacimientoInputRef = useRef(null);
 
   const [keyboardAvoidingEnabled, setKeyboardAvoidingEnabled] = useState(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const showDatePickerModal = () => {
     Keyboard.dismiss();
@@ -93,7 +94,7 @@ const CarnetVacunacionScreen = () => {
     };
     console.log('Datos a enviar:', dataVacunas);
     try {
-      const response = await fetch('http://192.168.0.7:8080/cargarVacunas', {
+      const response = await fetch('http://192.168.0.16:8080/cargarVacunas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -112,9 +113,8 @@ const CarnetVacunacionScreen = () => {
         {text: 'OK', onPress: () => resetForm()},
       ]);
     } catch (error) {
-      console.error('Error al guardar las vacunas:', error);
       Alert.alert(
-        'Error',
+        'Atención',
         'Error al guardar las vacunas. Por favor, inténtelo nuevamente más tarde.',
       );
     }
@@ -123,7 +123,13 @@ const CarnetVacunacionScreen = () => {
     }, 400);
     console.log('Datos del carnet de vacunación guardados:', dataVacunas);
   };
-
+  const updateButtonStatus = () => {
+    if (nombreApellido && fechaNacimiento && vacunas.length > 0) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
