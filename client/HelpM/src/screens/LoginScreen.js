@@ -63,8 +63,6 @@ const LoginScreen = ({onLogin}) => {
   };
 
   const handleSignIn = () => {
-    const email = 'emamonte777@gmail.com';
-    const password = 'Agustin12345678';
     if (!email || !password) {
       setEmailError(!email);
       setPasswordError(!password);

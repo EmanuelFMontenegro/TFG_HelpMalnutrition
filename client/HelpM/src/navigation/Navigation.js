@@ -52,7 +52,7 @@ const Navigation = () => {
           options={{headerShown: false}}
         />
 
-        {/* Nueva pantalla de resultados */}
+        
         <Stack.Screen
           name="ResultadoScreen"
           component={ResultadoScreen}

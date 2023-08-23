@@ -8,10 +8,10 @@ import {faUser, faClipboard} from '@fortawesome/free-solid-svg-icons';
 import {faCamera} from '@fortawesome/free-solid-svg-icons';
 import DatosBebeScreen from '../screens/DatosBebeScreen';
 import CarnetVacunacionScreen from '../screens/CarnetVacunacionScreen';
-import FaceDetection from '../components/FaceDetection';
 import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import {useCerrarSesion} from '../controller/CerrarSesion';
 import ResultadoScreen from '../screens/ResultadoScreen';
+import FaceDetectionMeshMLKit from '../components/FaceDetectionMeshMLKIT'
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -106,7 +106,7 @@ const BottomTab = ({navigation}) => {
       />
       <Tab.Screen
         name="Detección"
-        component={FaceDetection}
+        component={FaceDetectionMeshMLKit}
         options={({navigation}) => ({
           tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faCamera} size={24} color="#00CFEB" />

@@ -9,7 +9,7 @@ import DatosBebeScreen from './src/screens/DatosBebeScreen';
 import {
   CerrarSesionProvider,
   useCerrarSesion,
-} from './src/controller/CerrarSesion'; 
+} from './src/controller/CerrarSesion';
 const Stack = createStackNavigator();
 
 const LoadingScreen = () => (
@@ -24,7 +24,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1000); 
+    }, 1000);
   }, []);
 
   if (loading) {
@@ -50,7 +50,7 @@ const App = () => {
           options={{headerShown: false}}
         />
 
-         <Stack.Screen name="BottomTab" options={{headerShown: false}}>
+        <Stack.Screen name="BottomTab" options={{headerShown: false}}>
           {() => (
             <CerrarSesionProvider>
               <BottomTab />
