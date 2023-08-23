@@ -67,7 +67,7 @@ function DatosBebeScreen() {
       fechaVisita: fechaVisitaFormatted,
     };
     try {
-      const response = await fetch('http://15.228.101.67:8080/datosBebe', {
+      const response = await fetch('http://15.228.101.67:80/datosBebe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,17 +75,14 @@ function DatosBebeScreen() {
         body: JSON.stringify(datos),
       });
       if (response.ok) {
-        console.log('Datos insertados correctamente');
         Alert.alert('Mensaje Exitoso', 'Datos guardados correctamente', [
           {text: 'OK', onPress: () => resetForm()},
         ]);
       } else {
-        console.error('Error al insertar datos del bebé');
         Alert.alert('Error', 'Error al guardar los datos');
       }
     } catch (error) {
-      console.error('Error al insertar datos del bebé:', error);
-      Alert.alert('Error', 'Error al guardar los datos');
+       Alert.alert('Error', 'Error al guardar los datos');
     }
     setTimeout(() => {
       setCambiarColor('#00CFEB');
@@ -127,7 +124,7 @@ function DatosBebeScreen() {
       return;
     }
     const sexoLower = sexo.toLowerCase();
-    console.log('Sexo seleccionado:', sexoLower);
+   
     try {
       const {bebeDesnutrido, nivelDesnutricion, mensajeDesnutricion} =
         CotejarMedidas(
@@ -200,8 +197,7 @@ function DatosBebeScreen() {
         );
       }
     } catch (error) {
-      console.log('Error en el cotejo:', error.message);
-      Alert.alert('Error', error.message);
+            Alert.alert('Error', error.message);
     }
   };
 

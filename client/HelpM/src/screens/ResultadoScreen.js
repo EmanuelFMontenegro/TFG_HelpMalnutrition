@@ -21,7 +21,7 @@ function ResultadosScreen() {
     setMostrarGrafica(false);
     try {
       const response = await fetch(
-        `http://15.228.101.67:8080/datosBebe/${dni}`,
+        `http://15.228.101.67:80/datosBebe/${dni}`,
       );
       if (response.ok) {
         const datosBebe = await response.json();
@@ -43,7 +43,7 @@ function ResultadosScreen() {
         );
       }
     } catch (error) {
-      // console.error('Error al buscar el dni del bebé:', error);
+     
       setDatosBebe(null);
       Alert.alert(
         'Error',

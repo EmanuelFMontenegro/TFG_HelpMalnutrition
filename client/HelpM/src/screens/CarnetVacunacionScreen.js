@@ -94,7 +94,7 @@ const CarnetVacunacionScreen = () => {
     };
     console.log('Datos a enviar:', dataVacunas);
     try {
-      const response = await fetch('http://15.228.101.67:8080/cargarVacunas', {
+      const response = await fetch('http://15.228.101.67:80/cargarVacunas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,8 +107,7 @@ const CarnetVacunacionScreen = () => {
           `Error al cargar vacunas: ${response.status} ${response.statusText}`,
         );
       }
-
-      console.log('Vacunas cargadas correctamente');
+     
       Alert.alert('Guardar', 'Vacunas guardadas correctamente', [
         {text: 'OK', onPress: () => resetForm()},
       ]);
@@ -121,7 +120,7 @@ const CarnetVacunacionScreen = () => {
     setTimeout(() => {
       setCambiarColor('#00CFEB');
     }, 400);
-    console.log('Datos del carnet de vacunación guardados:', dataVacunas);
+   
   };
   const updateButtonStatus = () => {
     if (nombreApellido && fechaNacimiento && vacunas.length > 0) {

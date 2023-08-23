@@ -54,11 +54,11 @@ const LoginScreen = ({onLogin}) => {
       .then(userCredential => {
         Alert.alert('Usuario creado', 'Usuario creado exitosamente');
         const user = userCredential.user;
-        console.log(user);
+        
       })
       .catch(error => {
         Alert.alert('Error', 'El Usuario ya Existe');
-        console.log('Error al crear usuario:', error);
+       
       });
   };
 
@@ -80,7 +80,7 @@ const LoginScreen = ({onLogin}) => {
       })
       .catch(error => {
         Alert.alert('Error', 'Email/Contraseña incorrectos');
-        console.log(error);
+        
       });
   };
 
