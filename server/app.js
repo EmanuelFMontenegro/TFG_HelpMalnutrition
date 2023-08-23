@@ -8,7 +8,7 @@ import {
 import cors from "cors";
 
 const corsOptions = {
-  origin: "http://127.0.0.1:8080",
+  origin: "http://15.228.101.67:8080",
   methods: ["GET", "POST"],
   credentials: true,
 };

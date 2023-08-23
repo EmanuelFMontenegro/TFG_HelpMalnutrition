@@ -94,7 +94,7 @@ const CarnetVacunacionScreen = () => {
     };
     console.log('Datos a enviar:', dataVacunas);
     try {
-      const response = await fetch('http://192.168.0.16:8080/cargarVacunas', {
+      const response = await fetch('http://15.228.101.67:8080/cargarVacunas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

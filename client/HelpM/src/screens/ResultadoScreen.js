@@ -21,7 +21,7 @@ function ResultadosScreen() {
     setMostrarGrafica(false);
     try {
       const response = await fetch(
-        `http:// 192.168.0.16:8080/datosBebe/${dni}`,
+        `http://15.228.101.67:8080/datosBebe/${dni}`,
       );
       if (response.ok) {
         const datosBebe = await response.json();
