@@ -20,7 +20,9 @@ function ResultadosScreen() {
   const handleBuscar = async () => {
     setMostrarGrafica(false);
     try {
-      const response = await fetch(`http://15.228.101.67:80/datosBebe/${dni}`);
+      const response = await fetch(
+        `http://15.228.101.67:3000/datosBebe/${dni}`,
+      );
       if (response.ok) {
         const datosBebe = await response.json();
         if (Array.isArray(datosBebe) && datosBebe.length > 0) {

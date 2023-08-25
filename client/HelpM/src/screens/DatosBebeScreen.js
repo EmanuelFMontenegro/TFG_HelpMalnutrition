@@ -67,7 +67,7 @@ function DatosBebeScreen() {
       fechaVisita: fechaVisitaFormatted,
     };
     try {
-      const response = await fetch('http://15.228.101.67:80/datosBebe', {
+      const response = await fetch('http://15.228.101.67:3000/datosBebe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

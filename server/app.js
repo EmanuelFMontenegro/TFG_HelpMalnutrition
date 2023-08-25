@@ -8,7 +8,7 @@ import {
 import cors from "cors";
 
 const corsOptions = {
-  origin: "http://15.228.101.67:80",
+  origin: "http://15.228.101.67:3000",
   methods: ["GET", "POST"],
   credentials: true,
 };
@@ -68,6 +68,6 @@ app.post("/reconocimientoFacial", async (req, res) => {
   }
 });
 
-app.listen(80, () => {
-  console.log("Servidor escuchando en el puerto 80");
+app.listen(3000, () => {
+  console.log("Servidor escuchando en el puerto 3000");
 });
