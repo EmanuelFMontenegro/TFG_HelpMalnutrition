@@ -30,12 +30,11 @@ function ResultadosScreen() {
         } else {
           setDatosBebe(null);
           Alert.alert(
-            'Error de en la busqueda',
+            'Atención',
             'El DNI no se encuentra en la base de datos.',
           );
         }
       } else {
-        console.error('Error al buscar el dni del bebé');
         setDatosBebe(null);
         Alert.alert(
           'Error',

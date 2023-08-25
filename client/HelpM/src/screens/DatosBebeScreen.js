@@ -75,14 +75,14 @@ function DatosBebeScreen() {
         body: JSON.stringify(datos),
       });
       if (response.ok) {
-        Alert.alert('Mensaje Exitoso', 'Datos guardados correctamente', [
+        Alert.alert('Exito', 'Datos guardados correctamente', [
           {text: 'OK', onPress: () => resetForm()},
         ]);
       } else {
         Alert.alert('Error', 'Error al guardar los datos');
       }
     } catch (error) {
-       Alert.alert('Error', 'Error al guardar los datos');
+      Alert.alert('Error', 'Error al guardar los datos');
     }
     setTimeout(() => {
       setCambiarColor('#00CFEB');
@@ -124,7 +124,7 @@ function DatosBebeScreen() {
       return;
     }
     const sexoLower = sexo.toLowerCase();
-   
+
     try {
       const {bebeDesnutrido, nivelDesnutricion, mensajeDesnutricion} =
         CotejarMedidas(
@@ -197,7 +197,7 @@ function DatosBebeScreen() {
         );
       }
     } catch (error) {
-            Alert.alert('Error', error.message);
+      Alert.alert('Error', error.message);
     }
   };
 

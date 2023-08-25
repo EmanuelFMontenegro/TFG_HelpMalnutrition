@@ -108,7 +108,7 @@ const CarnetVacunacionScreen = () => {
         );
       }
 
-      Alert.alert('Guardar', 'Vacunas guardadas correctamente', [
+      Alert.alert('Exito', 'Vacunas guardadas correctamente', [
         {text: 'OK', onPress: () => resetForm()},
       ]);
     } catch (error) {
