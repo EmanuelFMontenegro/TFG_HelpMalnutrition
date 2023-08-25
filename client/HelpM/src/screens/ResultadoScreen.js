@@ -20,9 +20,7 @@ function ResultadosScreen() {
   const handleBuscar = async () => {
     setMostrarGrafica(false);
     try {
-      const response = await fetch(
-        `http://15.228.101.67:80/datosBebe/${dni}`,
-      );
+      const response = await fetch(`http://15.228.101.67:80/datosBebe/${dni}`);
       if (response.ok) {
         const datosBebe = await response.json();
         if (Array.isArray(datosBebe) && datosBebe.length > 0) {
@@ -43,7 +41,6 @@ function ResultadosScreen() {
         );
       }
     } catch (error) {
-     
       setDatosBebe(null);
       Alert.alert(
         'Error',
@@ -127,7 +124,7 @@ function ResultadosScreen() {
     setMostrarGrafica(false);
     setDatosBebe(null);
     setDni('');
-  }, 500000);
+  }, 180000);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
